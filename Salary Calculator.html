@@ -1,0 +1,247 @@
+<!doctype html>
+<html lang="en"> 
+ <head> 
+  <meta charset="UTF-8"> 
+  <meta http-equiv="X-UA-Compatible" content="IE=Edge"> <!--<meta name="viewport" content="width=device-width, initial-scale=1">---> 
+  <title>SALARY</title> 
+  <link rel="stylesheet" href="style.css"> 
+ <style type="text/css" id="dcoder_stylesheet">*{
+  margin: 0;
+  padding:0;
+  box-sizing: border-box;
+}
+body {
+  height: 1000px;
+}
+body{
+  background-image: url("https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT8ZdarRFBMdLAANdzvgOWpYfUuny5yQ1ES3A&usqp=CAU");
+ background-repeat: no-repeat;
+ background-size: cover;
+ background-attachment: fixed;
+ background-position: bottom;
+ }
+input{
+  width : 45%;
+  height : 100px;
+  font-size : 40px;
+  margin: 70px 10px;
+  padding: 5px;
+  border : 2px solid black;
+  background-color: rgb(230,230,230);
+  background-image: url("https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQqQZkqmkZlB0Gyom2J4kACVHWDwvw9IISHSw&usqp=CAU");
+ background-size: 20%;
+ background-position: right;
+ background-repeat: no-repeat;
+ display : block;
+ width: 70%;
+ }
+button {
+  margin: 10px;
+  text-align: center;
+  padding: 20px;
+  height: auto;
+  width: 40%;
+  font-size: 30px;
+  font-weight: bold;
+  color: green;
+}
+.bt_Nxt{
+  display: block;
+  width: 50%;
+  margin: 0 0 0   20px ;
+  font-size: 40px;
+}
+
+ .edit,.cutting_container,.Extra_cutting_container,.ExtraCuttingBox,.ShowSalary {
+  display: none;
+  
+}
+.Output{
+    font-size: 40px;
+    font-weight: bold;
+    outline: 2px solid black;
+    margin: 20px 10px 10px 10px;
+    line-height: 1.5;     
+    background-color: rgb(40,40,40,0.5);
+}
+p{
+  font-size: 30px;
+}
+.store>p{
+  font-size: 48px;
+  font-weight: bold;  
+}
+.center{
+  margin: auto;
+  text-align: center;
+}
+h1{
+  padding: 10px 0;
+  color: white;
+  background-color: rgb(240,240,240,0.2);
+  -webkit-text-stroke: 2px green;
+ font-size: 40px;
+
+}
+.ShowSalary{
+  width: auto;
+  margin: auto;
+  font-size: 40px;
+  padding : 25px;
+}
+.ExtraCuttingBox{
+  margin: 20px;
+}
+.ExtraCuttingBox>h1{
+  margin-bottom: 0;
+}
+.ExtraCutting{
+  margin: auto;
+  width: 80%;
+}
+input,button{
+  border-radius: 4.5px;
+}
+.visible{
+ display: block;
+}
+.invisible{
+  display: none;
+}</style></head> 
+ <body> 
+  <div class="input"> 
+   <input class="CompDay" type="number" placeholder="company work day"> 
+   <input class="MyDay" type="number" placeholder="my work day"> 
+   <input class="PlusHour" type="number" placeholder="+hour"> 
+   <input class="MinusHour" type="number" placeholder="-hour"> 
+   <input style="display:none" class="WorkHour"> 
+   <input class="BasicSalary" type="number" placeholder="your basic salary"> <button class="bt_Nxt">Next</button> 
+  </div> 
+  <div class="center"> 
+   <div class="cutting_container"> 
+    <p> </p> 
+    <h1>10% Cutting?</h1> 
+    <p></p> <button class="Cutting10Yes">Yes</button> <button class="Cutting10No">No</button> 
+   </div> 
+   <div class="Extra_cutting_container"> 
+    <p> </p> 
+    <h1>Extra cutting?</h1> 
+    <p></p><button class="CuttingExtraYes">Yes</button> <button class="CuttingExtraNo">No</button> 
+   </div> 
+   <div class="ExtraCuttingBox"> 
+    <h1>Extra Cutting</h1> 
+    <input class="ExtraCutting"> 
+   </div> <button class="ShowSalary">Show my slary </button> 
+  </div> 
+  <div class="Output"> 
+  </div> <button class="edit">edit</button> 
+  <div class="store"></div> 
+  <script src="main.js"></script> 
+ 
+<script type="text/javascript" id="dcoder_script">const input=document.querySelector(".input");
+const Store=document.querySelector(".store");
+const Next=document.querySelector(".bt_Nxt");
+const cutting_container=document.querySelector(".cutting_container");
+const Cutting10Yes=document.querySelector(".Cutting10Yes");
+const Cutting10No=document.querySelector(".Cutting10No");
+const Extra_cutting_container=document.querySelector(".Extra_cutting_container");
+const CuttingExtraYes=document.querySelector(".CuttingExtraYes");
+const CuttingExtraNo=document.querySelector(".CuttingExtraNo");
+const ShowSalary =document.querySelector(".ShowSalary ");
+const Output=document.querySelector(".Output");
+const ExtraCuttingBox=document.querySelector(".ExtraCuttingBox");
+const ExtraCutting=document.querySelector(".ExtraCutting");
+const edit=document.querySelector(".edit");
+const center=document.querySelector(".center")
+var Tc;    <!---10% cutting---->
+var MySalary;
+var List=[];
+var SL=0;
+Next.onclick=()=>{
+    Output.innerHTML="";
+    let CompDay=document.querySelector(".CompDay").value;
+    let MyDay=document.querySelector(".MyDay").value;
+    let PlusHour=document.querySelector(".PlusHour").value;
+    let MinusHour=document.querySelector(".MinusHour").value;
+    let BasicSalary=document.querySelector(".BasicSalary").value;
+    let WorkHour=document.querySelector(".WorkHour");
+   WorkHour.value=MyDay*11+PlusHour-MinusHour;
+   if(WorkHour!=0&&BasicSalary!=0&&CompDay!=0){
+     MySalary=(((BasicSalary/CompDay)/8)*WorkHour.value);
+     cutting_container.classList.add("visible");
+     input.classList.add("invisible");
+     center.style.marginTop="48%";
+       function showSalary(){
+         Extra_cutting_container.classList.remove("visible");
+         ShowSalary.onclick=()=>{
+         ExtraCuttingBox.classList.remove("visible");
+         let ExtraCutting=document.querySelector(".ExtraCutting").value;
+         MySalary=MySalary-ExtraCutting;
+         ShowSalary.classList.remove("visible");
+         Output.style.color="orange";
+         Output.innerHTML="Company day= "+CompDay+" day</br>Your work day= "+MyDay+" day</br>Extra hour= "+(PlusHour-MinusHour)+" hour</br>Total hour= "+WorkHour.value+" hour</br>Basic salary= "+BasicSalary+" Taka</br>10% Cutting= "+Tc+" Taka</br>Extra Cutting= "+ExtraCutting+" Taka</br>Your salary= "+MySalary+" Taka";
+         edit.classList.add("visible");
+           edit.onclick=()=>{
+            let color;
+              if(Tc!=0){
+                if(ExtraCutting!=0){
+                    color="red";
+                }
+                else{
+                     color="yellow";
+                }
+              }
+              else{
+                if(ExtraCutting!=0){
+                      color="aqua";
+                }
+                else{
+                      color="orange";
+                }
+              } 
+             SL+=1;
+             List.push(MySalary);
+             input.classList.remove("invisible");
+             edit.classList.remove("visible");
+             Output.innerHTML="";
+             Store.innerHTML=`<p style="color:${color}">${SL}. ${List[SL-1]} Taka</p>`+Store.innerHTML;
+           }
+        }
+    }
+     function extra_cutting(){
+      Extra_cutting_container.classList.add("visible");
+      cutting_container.classList.remove("visible");
+       CuttingExtraYes.onclick =()=> {
+          ExtraCuttingBox.classList.add("visible");
+          ShowSalary.classList.add("visible");
+          showSalary();
+        }
+       CuttingExtraNo.onclick=()=>{
+          ShowSalary.classList.add("visible");
+           ExtraCutting.value=0;
+           showSalary();
+        }
+    }
+      Cutting10Yes.onclick=()=>{
+       Tc=BasicSalary*(10/100);
+        MySalary=MySalary-Tc;
+       extra_cutting();
+      }
+      Cutting10No.onclick=()=>{
+       Tc=0;
+        extra_cutting();
+      }
+    }
+   else{
+    Output.style.color="orange";
+     if(CompDay==0){
+     Output.innerHTML="Company work day can't be 0;</br>"
+     }
+     if(WorkHour.value==0){
+     Output.innerHTML=Output.innerHTML+"Total work hour can't be 0; </br>"
+     }
+     if(BasicSalary==0){
+     Output.innerHTML=Output.innerHTML+"Basic salary can't be 0; </br>"
+     }
+   }
+ }</script></body></html>
